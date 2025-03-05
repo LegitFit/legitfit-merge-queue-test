@@ -1,8 +1,5 @@
 name: Merge Flow
 
-concurrency:
-  group: ${{ github.workflow }}
-
 on:
   push:
     branches:
