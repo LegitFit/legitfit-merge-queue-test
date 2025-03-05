@@ -1,0 +1,34 @@
+name: Merge Flow
+
+concurrency:
+  group: ${{ github.workflow }}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-e2e-tests:
+    name: Testing
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          clean: false
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.19.0"
+      - name: Install Lerna and Yarn
+        run: npm install --location=global yarn
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+      - name: Install Playwright Browsers
+        run: yarn playwright install
+      - name: Check Playwright version
+        run: yarn playwright --version
+      - name: Run Playwright tests
+        run: yarn playwright test
