@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  merge_group:
+    types: [checks_requested]
 
 jobs:
   run-e2e-tests:
